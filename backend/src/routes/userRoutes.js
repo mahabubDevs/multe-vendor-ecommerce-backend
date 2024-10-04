@@ -6,7 +6,7 @@ const userRoutes = express.Router();
 
 userRoutes.post("/register", registerUser);
 userRoutes.post("/login", loginUser);
-userRoutes.get("/profile", protect,profile);
+userRoutes.get("/profile",protect, profile);
 userRoutes.put("/profile",protect, updatProfile);
 userRoutes.get("/profiles", protect, authorize("admin"), getAllProfile);
 userRoutes.delete("/:id",protect, deleteUserProfile);

@@ -1,7 +1,7 @@
 
 import { User } from "../models/userModel.js";
 import expressAsyncHandler from "express-async-handler";
-import { generatToken } from "../utils/utils.js";
+import { generateToken } from "../utils/utils.js";
 
 
 
@@ -54,21 +54,22 @@ export const loginUser = expressAsyncHandler(async (req,res) => {
     try {
         // First we find if the user already  exist
         const user = await User.findOne({ email });
+        // console.log(user)
         res.json({
             _id: user._id,
             name: user.name,
             email: user.email,
             role: user.role,
-            token: generatToken(user._id)
+            token: generateToken(user._id)
         });
         // comparePassword problem
-        // if (user && (await user.comparePassword(password))) {
+        // if (user.password && (await user.comparePassword(password))) {
         //     res.json({
         //         _id: user._id,
         //         name: user.name,
         //         email: user.email,
         //         role: user.role,
-        //         token: generatToken(user._id),
+        //         token: generateToken(user._id),
         //     });
         // }else {
         //     res.status(400).json({
@@ -170,17 +171,37 @@ export const updatProfile = expressAsyncHandler(async (req,res) => {
 //@access private
 
 
-export const getAllProfile = expressAsyncHandler(async (req,res) => {
-        const users = await User.find();
-        if (users) {
-            res.json(users);
-        }else {
-            res.status(400).json({
-                message: "User not found",
-               })
-        }
+// export const getAllProfile = expressAsyncHandler(async (req,res) => {
+//         const users = await User.find();
+//         if (users) {
+//             res.json(users);
+//         }else {
+//             res.status(400).json({
+//                 message: "User not found",
+//                })
+//         }
    
-})
+// })
+
+export const getAllProfile = expressAsyncHandler(async (req, res) => {
+    try {
+        const users = await User.findById({_id});
+        console.log(users)
+        if (users.length > 0) {
+            res.json(users);  // সকল ব্যবহারকারীকে JSON আকারে রিটার্ন করা হচ্ছে
+        } else {
+            res.status(404).json({  // যদি ব্যবহারকারী না থাকে, 404 কোড
+                message: "No users found"
+            });
+        }
+    } catch (error) {
+        res.status(500).json({  // ডাটাবেস সংক্রান্ত ত্রুটির জন্য 500 কোড
+            message: "Server error",
+            error: error.message
+        });
+    }
+});
+
 
 
 //@desc Get Delete profile

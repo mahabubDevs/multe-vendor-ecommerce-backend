@@ -3,16 +3,16 @@ import { User } from '../models/userModel.js';
 
 export const protect = async (req, res, next) => {
     let token;
-
+    
     // Check if Authorization header has Bearer token
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             // Get token from header
-            token = req.headers.authorization.split(' ')[1];
-
+            token = req.headers.authorization.split(" ")[1];
+            
             // Verify token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+            const decoded = jwt.verify(token, process.env.JWT_SECREAT);
+            
             // Get user from the token
             req.user = await User.findById(decoded.id).select('-password');
 
@@ -28,8 +28,10 @@ export const protect = async (req, res, next) => {
 };
 
 export const authorize = (...roles) => {
+    
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
+            
             res.status(500).json({
                 message: "You don't have permission",
                 error: error.message,
