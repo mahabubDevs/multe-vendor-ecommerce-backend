@@ -39,12 +39,16 @@ const vendorModel = new mongoose.Schema({
         type: String,
         required: true
     },
+    storeBanner: {
+        type: String,
+      required: true  
+    },
     isVerified: {
         type: Boolean,
         default:false
     },
     products: [
-        { type: mongoose.Schema.Type.ObjectId, ref: "Product" }
+        // { type: mongoose.Schema.Type.ObjectId, ref: "Product" }
     ],
     subscription:subscriptionSchema,    
 }, {

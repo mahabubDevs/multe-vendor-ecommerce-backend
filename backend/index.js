@@ -6,6 +6,7 @@ import morgan from "morgan";
 import cors from "cors";
 import { errorHandler, notFoundErrorHandelar } from "./src/middlewares/errorHandlear.js";
 import userRoutes from "./src/routes/userRoutes.js";
+import vendorRouter from "./src/routes/vendorRoutes.js";
 
 
 //connect environment data
@@ -24,6 +25,7 @@ app.use(cors());
 
 //Api Routing
 app.use("/api/user",userRoutes)
+app.use("/api/vendor",vendorRouter)
 
 //Error handeling
 app.use(errorHandler);
