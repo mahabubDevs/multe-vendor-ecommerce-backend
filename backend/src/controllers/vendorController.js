@@ -45,3 +45,25 @@ export const getVendors = expressAsyncHandler(async (req, res) => {
     }
 })
 
+
+//@desc Get a Vendor by slug
+//@route /api/vendors
+//@access public
+
+
+export const getVendorsBySlug = expressAsyncHandler(async (req, res) => {
+    try {
+        const Vendors = await Vendor.findOne({ slug: req.params.slug});
+        res.status(201).json({
+            status: true,
+            data: Vendors
+        })
+    } catch (error) {
+        res.status(500).json({ 
+            message: "Somthing is vendor create  worn!",
+            error: error.message,
+        });
+        
+    }
+})
+

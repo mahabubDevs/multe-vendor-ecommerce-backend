@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify"
 
 const subscriptionSchema = new mongoose.Schema({
     plan: {
@@ -31,6 +32,10 @@ const vendorModel = new mongoose.Schema({
         required: true,
         unique: true
     },
+    slug: {
+        type: String,
+        unique: true,
+    },
     storeDiscription: {
         type: String,
         required:true
@@ -56,4 +61,8 @@ const vendorModel = new mongoose.Schema({
 }
 )
 
+vendorModel.pre("save", async function(next) {
+    this.slug = slugify(this.storeName.toLowerCase());
+        next();
+})
 export const Vendor = mongoose.model("Vendor",vendorModel)
