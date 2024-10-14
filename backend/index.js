@@ -8,6 +8,10 @@ import { errorHandler, notFoundErrorHandelar } from "./src/middlewares/errorHand
 import userRoutes from "./src/routes/userRoutes.js";
 import vendorRouter from "./src/routes/vendorRoutes.js";
 import productRoutes from "./src/routes/productRoutes.js";
+import brandRoutes from "./src/routes/brandRoutes.js";
+import categoryRoutes from "./src/routes/categoryRoutes.js";
+import subCategoryRoutes from "./src/routes/subCategoryRoutes.js";
+import wishlistRoutes from "./src/routes/wishlistRoutes.js";
 
 
 //connect environment data
@@ -28,6 +32,10 @@ app.use(cors());
 app.use("/api/user",userRoutes)
 app.use("/api/vendor",vendorRouter)
 app.use("/api/product",productRoutes)
+app.use("/api/brand",brandRoutes)
+app.use("/api/category",categoryRoutes)
+app.use("/api/subcategory",subCategoryRoutes)
+app.use("/api/wishlist",wishlistRoutes)
 
 //Error handeling
 app.use(errorHandler);
