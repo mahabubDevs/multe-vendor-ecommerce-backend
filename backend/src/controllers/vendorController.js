@@ -23,3 +23,25 @@ export const createVendor = expressAsyncHandler(async (req, res) => {
     }
 })
 
+
+//@desc Get a Vendor
+//@route /api/vendors
+//@access public
+
+
+export const getVendors = expressAsyncHandler(async (req, res) => {
+    try {
+        const Vendors = await Vendor.find().populate("user");
+        res.status(201).json({
+            status: true,
+            data: Vendors
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "Somthing is vendor create  worn!",
+            error: error.message,
+        });
+        
+    }
+})
+
