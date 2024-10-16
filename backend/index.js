@@ -12,6 +12,7 @@ import brandRoutes from "./src/routes/brandRoutes.js";
 import categoryRoutes from "./src/routes/categoryRoutes.js";
 import subCategoryRoutes from "./src/routes/subCategoryRoutes.js";
 import wishlistRoutes from "./src/routes/wishlistRoutes.js";
+import reviewRoutes from "./src/routes/reviewRoutes.js";
 
 
 //connect environment data
@@ -36,6 +37,7 @@ app.use("/api/brand",brandRoutes)
 app.use("/api/category",categoryRoutes)
 app.use("/api/subcategory",subCategoryRoutes)
 app.use("/api/wishlist",wishlistRoutes)
+app.use("/api/review",reviewRoutes) 
 
 //Error handeling
 app.use(errorHandler);

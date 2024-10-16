@@ -22,8 +22,12 @@ const reviewSchema = new mongoose.Schema({
         comment: String,
         createdAt: {
             type: Date,
-            default: Date.now();
+            default: Date.now(),
         },
+    },
+    isApproved: {
+        type: Boolean,
+        default: false,
     },
 }, {
     timestamps:true
