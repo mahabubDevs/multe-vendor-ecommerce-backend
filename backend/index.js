@@ -14,7 +14,8 @@ import subCategoryRoutes from "./src/routes/subCategoryRoutes.js";
 import wishlistRoutes from "./src/routes/wishlistRoutes.js";
 import reviewRoutes from "./src/routes/reviewRoutes.js";
 
-
+import uploadRouter from "./src/routes/uploadRouter.js";
+// const uploadRouter = require('./uploadRouter');
 //connect environment data
 dotenv.config();
 
@@ -37,7 +38,10 @@ app.use("/api/brand",brandRoutes)
 app.use("/api/category",categoryRoutes)
 app.use("/api/subcategory",subCategoryRoutes)
 app.use("/api/wishlist",wishlistRoutes)
-app.use("/api/review",reviewRoutes) 
+app.use("/api/review", reviewRoutes) 
+
+app.use('/api/upload', uploadRouter);
+
 
 //Error handeling
 app.use(errorHandler);
