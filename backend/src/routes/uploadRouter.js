@@ -16,13 +16,13 @@
 
 import express from "express";
 
-import  { uploads } from '../controllers/uploadController.js';
+import  { deleteUploadFile, uploads } from '../controllers/uploadController.js';
 
 
 const uploadRouter = express.Router();
 
 uploadRouter.post("/", uploads);
-
+uploadRouter.delete('/delete-file', deleteUploadFile);
 
 
 

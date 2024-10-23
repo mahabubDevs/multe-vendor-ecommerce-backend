@@ -1,9 +1,9 @@
+
+
 import expressAsyncHandler from "express-async-handler";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-
-
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -23,14 +23,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-
-
 export const uploads = [
-    // Add multer middleware for file upload
-    upload.single('File'), // 'file' is the name of the form field for file upload
+    upload.single('File'), // Ensure the client uses 'File' as the field name
     expressAsyncHandler(async (req, res) => {
         try {
-            // Access the uploaded file information from req.file
             const file = req.file;
 
             if (!file) {
@@ -39,10 +35,8 @@ export const uploads = [
                 });
             }
 
-            // You can access the file path like this
             const filePath = file.path;
 
-            // Return success response with file path
             res.status(200).json({
                 message: "Brand created successfully",
                 filePath: filePath,
@@ -55,3 +49,40 @@ export const uploads = [
         }
     })
 ];
+
+// Define the deleteFile function
+const deleteFile = (filePath) => {
+    try {
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            console.log(`File at ${filePath} deleted successfully.`);
+        } else {
+            console.log(`File at ${filePath} does not exist.`);
+        }
+    } catch (error) {
+        console.error(`Error deleting file at ${filePath}:`, error.message);
+    }
+};
+
+export const deleteUploadFile = expressAsyncHandler(async (req, res) => {
+    try {
+        const filePath = req.body.filePath;
+
+        if (!filePath) {
+            return res.status(400).json({
+                message: "File path is required for deletion",
+            });
+        }
+
+        deleteFile(filePath);
+
+        res.status(200).json({
+            message: 'File deleted successfully',
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Something went wrong while deleting the file!',
+            error: error.message,
+        });
+    }
+});
